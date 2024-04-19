@@ -1,0 +1,218 @@
+<html>
+<head>
+  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+-->
+</head>
+<body>
+      
+  <input type="text" id="myInput">
+  <div onclick="deleteAllStrings()" id="del">
+  +
+  </div>
+  <div id="content">
+    gg
+  </div>  
+  <div class="container">
+    <div class="left">
+      <p id="p_left">左侧内容</p>
+    </div>
+    <div class="right">
+      <p id="p_right">右侧内容</p>
+    </div>
+  </div>
+  <style>
+    .container {
+      margin-top: 7px;
+      display: flex;
+    }
+
+    .left {
+      flex: 1;
+      background-color: lightblue;
+      padding: 20px;
+    }
+
+    .right {
+      flex: 1;
+      background-color: lightgreen;
+      padding: 20px;
+    }
+    #p_left{
+      font-size: 20px;
+      font-weight: 400;
+    }
+    #p_right{
+      font-size: 20px;
+      font-weight: 400;
+    }
+    
+    #myInput{
+         width:60%;
+     //    background-color: pink;
+         box-shadow: none!important;
+         height: 34px;
+          line-height: 34px;
+          border: 0px;
+          outline: none;
+          border-bottom: 1px solid rgba(0, 0, 0,1);
+          font-size: 16px;
+    }
+
+    #del{
+     
+position: absolute;
+top: 15px;
+right:120px;
+height: 20px;
+line-height: 20px;
+width: 20px;
+font-size: 1em;
+font-weight: bold;
+border-radius: 50%;
+background-color: #ff0000;
+color: white;
+text-align: center;
+
+  rotate: 45deg;
+/* cursor: pointer;*/
+user-select: none;
+     
+     
+     
+    }
+    #content{
+      width: 100%;
+      margin: 5px;
+      height: 45px;
+      line-height: 45px;
+      font-size: 20px;
+      font-weight: 400;
+      display: none;
+    }
+  </style>
+  <script> 
+  
+      var data={
+      "a":"",
+      "b":"ou",
+      "c":"iao",
+      "d":"iang,uang",
+      "e":"",
+      "f":"en",
+      "g":"eng",
+      "h":"ang",
+      "i":"ch",
+      "j":"an",
+      "k":"ao",
+      "l":"ai",
+      "n":"in",
+      "m":"ian",
+      "o":"uo",
+      "p":"un",
+      "q":"iu",
+      "r":"uan,er",
+      "s":"ong,iong",
+      "t":"ue",
+      "u":"sh",
+      "v":"zh,ve,ui",
+      "w":"ia,ua",
+      "x":"ie",
+      "y":"uai,v",
+      "z":"ei",
+      ";":"ing"
+      }
+  
+      window.onload = function() {
+        // Get the <p> element
+        var pElement = document.getElementById("p_left");
+        var pElement2 = document.getElementById("p_right");
+  
+        // Convert the JSON data to a string
+        //var jsonString = JSON.stringify(data);
+        let result = '';
+        let result2 = '';
+        for (let i = 97; i <= 122; i++) {
+          var key =String.fromCharCode(i).toString();
+          if(i<111){
+          result+=key+' : '+data[key]+"<br>"
+          }else{
+            result2+=key+' : '+data[key]+"<br>"
+            
+          }
+        }
+        result2+=";"+' : '+data[";"]+"<br>"
+        //console.log(result);
+        // Set the content of the <p> element to the JSON string
+        pElement.innerHTML = result;
+        pElement2.innerHTML = result2;
+      };
+      function deleteAllStrings() {
+        document.getElementById("myInput").value = "";
+        var $find_content=document.getElementById("content");
+        $find_content.style.display = "none";
+        $find_content.innerHTML=""
+      }
+      var $searchValue=document.getElementById("myInput");
+      function find (show){
+        var $find_content=document.getElementById("content");
+        if(show==false){
+          $find_content.style.display = "none";
+          $find_content.innerHTML=""
+        }
+        //no   alert("find")
+        var sv = $searchValue.value.trim();
+        if (sv==''){
+          
+          $find_content.style.display = "none";
+          $find_content.innerHTML=""
+        }else{
+          $find_content.style.display = "block";
+          let myString = sv;
+          let lowercaseString = myString.toLowerCase();
+          if(lowercaseString.length==1){
+            $find_content.innerHTML=lowercaseString+" : "+ data[lowercaseString]
+          }
+          else{
+          var data_value=""
+          var data_key=""
+          for (let key in data) {
+            if (data[key] === lowercaseString) {
+              //console.log("Success! Found a matching value:", searchValue);
+              
+              data_value=data[key]
+              data_key=key
+              break;
+            }
+          }
+          if(data_key==""){
+          $find_content.style.display = "none";
+          $find_content.innerHTML=""
+          }
+          $find_content.innerHTML=data_key+" : "+ data_value
+          }
+          
+        }
+        
+      } 
+      $searchValue.oninput = function () {
+        //  alert(5)
+        if (this.value) {
+          find(true);
+          
+        }
+        else{
+          find(false);
+        }
+        
+      };
+      
+      
+  </script>
+
+
+</body>
+</html>
